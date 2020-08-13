@@ -16,14 +16,20 @@ function getLibrary() {
 function displayBooks() {
   bookTableBody.innerHTML = '';
   let library = getLibrary();
-  for (let book of library) {
+  library.forEach((book, index) => {
     let row = document.createElement('tr');
     row.innerHTML = `<td>${book.title}</td>
                      <td>${book.author}</td>
                      <td>${book.pages}</td>
-                     <td>${book.readed}</td>`;
+                     <td>${book.readed}</td>
+                     <td><button class="btn btn-danger delete-book-btn">
+                        <i class="fas fa-trash no-click"></i>
+                     </button></td>`;
+    row.setAttribute('data-index', index);
+    let deleteBookBtn = row.querySelector('.delete-book-btn');
+    deleteBookBtn.addEventListener('click', deleteBook);
     bookTableBody.appendChild(row);
-  }
+  });
 }
 
 function addBookToLibrary(e) {
@@ -38,6 +44,18 @@ function addBookToLibrary(e) {
   displayBooks();
   bookForm.reset();
   e.preventDefault();
+}
+
+function deleteBook(e) {
+  let domBookToDelete = e.target.parentElement.parentElement;
+  let bookToDeleteIndex = parseInt(
+    domBookToDelete.getAttribute('data-index'),
+    10
+  );
+  let library = getLibrary();
+  library = library.filter((book, index) => index !== bookToDeleteIndex);
+  localStorage.setItem('library', JSON.stringify(library));
+  displayBooks();
 }
 
 // Events
