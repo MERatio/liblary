@@ -6,3 +6,8 @@
 .no-click {
   pointer-events: none;
 }
+
+.change-reading-btn {
+  font-size: 1.1rem;
+  color: #fff;
+}

@@ -21,13 +21,20 @@ function displayBooks() {
     row.innerHTML = `<td>${book.title}</td>
                      <td>${book.author}</td>
                      <td>${book.pages}</td>
-                     <td>${book.readed}</td>
+                     <td>
+                      ${book.readed}
+                      <button class="btn btn-warning change-reading-btn ml-3">
+                        <i class="fas fa-exchange-alt no-click"></i>
+                      </button>
+                    </td>
                      <td><button class="btn btn-danger delete-book-btn">
                         <i class="fas fa-trash no-click"></i>
                      </button></td>`;
     row.setAttribute('data-index', index);
     let deleteBookBtn = row.querySelector('.delete-book-btn');
     deleteBookBtn.addEventListener('click', deleteBook);
+    let changeReadingBtn = row.querySelector('.change-reading-btn');
+    changeReadingBtn.addEventListener('click', changeReadingStatus);
     bookTableBody.appendChild(row);
   });
 }
@@ -54,6 +61,16 @@ function deleteBook(e) {
   );
   let library = getLibrary();
   library = library.filter((book, index) => index !== bookToDeleteIndex);
+  localStorage.setItem('library', JSON.stringify(library));
+  displayBooks();
+}
+
+function changeReadingStatus(e) {
+  let domBook = e.target.parentElement.parentElement;
+  let bookIndex = parseInt(domBook.getAttribute('data-index'), 10);
+  let library = getLibrary();
+  let book = library[bookIndex];
+  book.readed = book.readed === 'Yes' ? 'No' : 'Yes';
   localStorage.setItem('library', JSON.stringify(library));
   displayBooks();
 }
