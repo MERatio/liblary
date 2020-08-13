@@ -1,3 +1,8 @@
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
 .no-click {
   pointer-events: none;
 }
