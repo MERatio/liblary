@@ -2,11 +2,13 @@ let localStorage = window.localStorage;
 let bookTableBody = document.getElementById('bookTableBody');
 let bookForm = document.getElementById('bookForm');
 
-function Book(title, author, pages, readed) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.readed = readed;
+class Book {
+  constructor(title, author, pages, readed) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.readed = readed;
+  }
 }
 
 function getLibrary() {
